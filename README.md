@@ -7,7 +7,7 @@ Build wheels for grpc and Home Assistant.
 A manual build can take 15 minutes to an hour
 
 ```bash
-docker build --build-arg BUILD_FROM=homeassistant/armv7-base-python:3.9-alpine3.14 --build-arg BUILD_ARCH=armv7 --tag grpc:armv7 .
+docker build --build-arg BUILD_FROM=homeassistant/armv7-base-python:3.9-alpine3.14 --build-arg BUILD_ARCH=armv7 --tag grpc:armv7 builder/
 ```
 If the build was successful, the wheel files can be extracted from the resulting
 Docker images like so:
