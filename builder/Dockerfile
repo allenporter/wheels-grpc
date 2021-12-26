@@ -14,9 +14,7 @@ RUN apk add --no-cache \
         linux-headers \
         musl \
         openssl-dev \
-        pkgconfig \
-        git \
-        zip
+        pkgconfig
 
 RUN pip3 install Cython
 
