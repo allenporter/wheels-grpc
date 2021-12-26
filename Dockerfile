@@ -13,6 +13,7 @@ RUN apk add --no-cache \
         cmake \
         linux-headers \
         musl \
+        openssl-dev \
         pkgconfig \
         git \
         zip
@@ -20,20 +21,15 @@ RUN apk add --no-cache \
 RUN pip3 install Cython
 
 RUN cd /usr/src \
-    && git clone --depth=1 -b v${GRPC_VERSION} https://github.com/grpc/grpc
-RUN cd /usr/src/grpc \
-    && git submodule update --init --depth 1
+    && pip3 download grpcio==${GRPC_VERSION} \
+    && tar xzf grpcio-${GRPC_VERSION}.tar.gz
+    && rm grpcio-${GRPC_VERSION}.tar.gz
 
 ENV GRPC_BUILD_WITH_BORING_SSL_ASM=false
 ENV GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=true
 ENV GRPC_PYTHON_BUILD_WITH_CYTHON=true
 ENV GRPC_PYTHON_DISABLE_LIBC_COMPATIBILITY=true
-#GRPC_PYTHON_LDFLAGS="-lpthread -Wl,-wrap,memcpy -static-libgcc -leventinfo"
 
-# XXX move above
-RUN apk add openssl-dev
-
-RUN cd /usr/src/grpc \
-    && python3 ./setup.py bdist_wheel
-#RUN pip3 wheel --no-binary=":all" grpcversion==${GRPC_VERSION}
-
+RUN mkdir /usr/src/wheels \
+    cd /usr/src/grpcio-${GRPC_VERSION} \
+    && python3 ./setup.py bdist_wheel --bdist-dir /usr/src/wheels/
