@@ -29,7 +29,7 @@ imports work correctly.
 ```bash
 # The name of the wheel file created above
 $ export WHEEL=wheels/grpcio-1.43.0-cp39-cp39-linux_armv7l.whl
-$ docker build --build-arg BUILD_FROM=homeassistant/${ARCH}-base-python:3.9-alpine3.14 --build-arg BUILD_ARCH=${ARCH} --build-arg WHEEL=${WHEEL} --tag grpc-test:${ARCH} -f test/Dockerfile .
+$ docker build --build-arg BUILD_FROM=homeassistant/${ARCH}-base-python:3.9-alpine3.14 --build-arg WHEEL=${WHEEL} --tag grpc-test:${ARCH} -f test/Dockerfile .
 $ docker run grpc-test:${ARCH}
 ...
 Package import success
